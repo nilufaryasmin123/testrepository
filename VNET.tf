@@ -1,22 +1,23 @@
-resource "azurestack_virtual_network" "virtual-network" {
-  name                = "${azurestack_resource_group.rg.name}-VirtualNetwork"
-  address_space       = ["10.0.0.0/16"]
-  location            = "${azurestack_resource_group.rg.location}"
-  resource_group_name = "${azurestack_resource_group.rg.name}"
+resource "azurerm_virtual_network" "la_vnet" {
+  name = var.vnet_name
+  address_space = ["${var.vnet_cidr}"]
+  location = "${var.location}"
+  resource_group_name   = "${azurerm_resource_group.terraform_rg.name}"
+
+  tags {
+      environment = var.env_name
+  }
 }
 
-resource "azurestack_subnet" "subnet1" {
-  name                            = "${azurestack_resource_group.rg.name}-Subnet1"
-  resource_group_name             = "${azurestack_resource_group.rg.name}"
-  virtual_network_name            = "${azurestack_virtual_network.virtual-network.name}"
-  address_prefix                  = "10.0.2.0/24"
-  network_security_group_id       = "${azurestack_network_security_group.nsg.id}"
+resource "azurerm_subnet" "la_subnet_1" {
+  name = var.subnet_name1
+  address_prefix = "${var.subnet1_cidr}"
+  virtual_network_name = "${azurerm_virtual_network.la_vnet.name}"
+  resource_group_name = "${azurerm_resource_group.terraform_rg.name}"
 }
 
-resource "azurestack_public_ip" "public-ip" {
-  count                         = "${var.vm_count}"
-  name                          = "public-ip-${count.index + 1}"
-  location                      = "${azurestack_resource_group.rg.location}"
-  resource_group_name           = "${azurestack_resource_group.rg.name}"
-  public_ip_address_allocation  = "static"
-}
+resource "azurerm_subnet" "la_subnet_2" {
+  name = var.subnet_name2
+  address_prefix = "${var.subnet2_cidr}"
+  virtual_network_name = "${azurerm_virtual_network.la_vnet.name}"
+  resource_group_name = "${azurerm_resource_group.terraform_rg.name}"

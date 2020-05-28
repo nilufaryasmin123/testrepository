@@ -1,47 +1,30 @@
-variable "vnet_name" {
-  description = "Name of the vnet to create"
-  default     = "acctvnet"
-}
-
 variable "resource_group_name" {
-  description = "Name of the resource group to be imported."
+  description = "Resource group name that will contain various resources"
 }
 
-variable "address_space" {
-  type        = list(string)
-  description = "The address space that is used by the virtual network."
-  default     = ["10.0.0.0/16"]
+variable "vnet_name" {
+  description = "Name of the vnet"
+}
+variable "env_name" {
+  description = "Name of the environment"
 }
 
-# If no values specified, this defaults to Azure DNS 
-variable "dns_servers" {
-  description = "The DNS servers to be used with vNet."
-  default     = []
+variable "vnet_cidr" {
+  description = "CIDR block for Virtual Network"
 }
 
-variable "subnet_prefixes" {
-  description = "The address prefix to use for the subnet."
-  default     = ["10.0.1.0/24"]
+variable "subnet_name1" {
+  description = "Name of the First subnet"
+}
+variable "subnet_name2" {
+  description = "Name of the second subnet"
 }
 
-variable "subnet_names" {
-  description = "A list of public subnets inside the vNet."
-  default     = ["subnet1", "subnet2", "subnet3"]
+variable "subnet1_cidr" {
+  description = "CIDR block for Subnet within a Virtual Network"
 }
 
-variable "nsg_ids" {
-  description = "A map of subnet name to Network Security Group IDs"
-  type        = map(string)
-
-  default = {
-  }
+variable "subnet2_cidr" {
+  description = "CIDR block for Subnet within a Virtual Network"
 }
 
-variable "tags" {
-  description = "The tags to associate with your network and subnets."
-  type        = map(string)
-
-  default = {
-    ENV = "test"
-  }
-}
