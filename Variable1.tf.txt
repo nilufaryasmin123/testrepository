@@ -23,8 +23,3 @@ variable "subnet_name2" {
 variable "subnet1_cidr" {
   description = "CIDR block for Subnet within a Virtual Network"
 }
-
-variable "subnet2_cidr" {
-  description = "CIDR block for Subnet within a Virtual Network"
-}
-
